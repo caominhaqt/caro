@@ -1,0 +1,37 @@
+.Game{
+    height: 90vh;
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    background-color: antiquewhite;
+    flex-direction: column;
+}
+.X{
+    display: flex;
+    position: absolute;
+    left: 200px;
+    bottom: 500px;
+
+}
+.X:hover {
+    cursor: pointer;
+}
+.Set{
+    width: 600px;
+    height: 450px;
+    background-color: aquamarine;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 30px);
+    grid-template-rows: repeat(auto-fill, 30px);
+}
+.cell{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cell:hover{
+    cursor: pointer;
+}
