@@ -1,44 +1,93 @@
-import React from 'react'
-import './Game.css'
-import X from '../Image/X'
-import O from '../Image/O'
-const Game = (props) => {
-  const handleReturn = () => {
-    props.setFound(false)
-    props.setCells(Array(props.rows * props.columns).fill(null))
-    props.setNext(false)
-    props.setValue(0)
+  import React, { useState } from 'react'
+  import './Game.css'
+  import { Game as WasmGame } from "../../RustNewbie/hello-wasm/pkg/hello_wasm.js";
+  const SIZE = 15; // hoặc đúng bằng SIZE trong Rust
 
+  const Game = (props) => {
+
+    const [wasmGame] = useState(() => new WasmGame());
+    const [, setTick] = useState(0)   // dùng để force re-render
+    // const [ready, setReady] = useState(false)
+    // useEffect(() => {
+    //   async function load() {
+    //     await init()
+    //     wasmGame.current = new WasmGame()
+    //     setReady(true)
+    //   }
+    //   load()
+    // }, [])
+
+    const handleReturn = () => {
+      props.setFound(0)
+    }
+
+    const handleRestart = () => {
+      // if (wasmGame.current) {
+        wasmGame.reset()
+        setTick(t => t + 1)  // ép render lại
+      // }
+    }
+
+    const handleClick = (x, y) => {
+      // if (!wasmGame.current) return
+
+      const success = wasmGame.play(x, y)
+
+      if (success) {
+        setTick(t => t + 1)
+      }
+    }
+
+    const renderBoard = () => {
+      // if (!wasmGame.current) return null
+
+      const cells = []
+
+      for (let i = 0; i < SIZE; i++) {
+        for (let j = 0; j < SIZE; j++) {
+          const value = wasmGame.get_cell(i, j)
+
+          cells.push(
+            <div
+              key={`${i}-${j}`}
+              className="cell"
+              onClick={() => handleClick(i, j)}
+            >
+              {value === "X" ? "X" : value === "O" ? "O" : ""}
+            </div>
+          )
+        }
+      }
+
+      return cells
+    }
+
+    // if (!ready) return <div>Loading...</div>
+
+    const winner = wasmGame.winner
+
+    return (
+      <div className='Game'>
+        {winner !== '.' && (
+          <div className='Win'>Player {winner} win</div>
+        )}
+
+        <div className='X' onClick={handleReturn}>
+          <p style={{ fontSize: '32px' }}>X</p>
+        </div>
+
+        <div className='Set'>
+          {renderBoard()}
+        </div>
+
+        <div className='Restart'>
+          <button onClick={handleRestart}>
+            <p>Restart</p>
+          </button>
+        </div>
+
+      </div>
+    )
   }
-  const handleRestart = () => {
-    props.setCells(Array(props.rows * props.columns).fill(null))
-    props.setValue(0)
-  }
-  return (
-    <div className='Game'>
-      {props.value !== 0 && (
-        <div className='Win'>player {props.value} win</div>
-      )}
-      <div className='X' onClick={handleReturn}>
-        <p style={{ fontSize: '32px' }}>X</p>
-      </div>
-      <div className='Set'>
-        {props.cells.map((value, index) => (
-          <div
-            key={index}
-            className="cell"
-            onClick={() => props.handleClick(index)}
-          >
-            {value === "X" ? <X /> : value === "O" ? <O /> : null}
 
-          </div>
-        ))}
-      </div>
-      <div className='Restart'>
-          <button onClick={handleRestart}>Restart</button>
-      </div>
-    </div>
-  )
-}
-
-export default Game
+  export default Game

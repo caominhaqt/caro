@@ -1,4 +1,4 @@
-.Home{
+.Bot_UI{
     height: 90vh;
     width: 300px;
     background-color: #192026;
@@ -9,11 +9,20 @@
     align-items: center;
     justify-self: center;
     justify-content: space-evenly;
+    padding: 10px;
+    box-sizing: border-box;
 }
-.Title{
+.Return{
+    display: flex;
+    position: absolute;
+    left: 540px;
+    bottom: 510px;
     user-select: none;
 }
-.PlayBot{
+.Return:hover{
+    cursor: pointer;
+}
+.Lv1{
     width: 80%;
     height: 20%;
     margin-top: 20px;
@@ -28,13 +37,27 @@
     justify-content: center;
     align-items: center;
 }
-
-.PvP{
+.Lv2{
     width: 80%;
     height: 20%;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #2196F3;
+    background-color: yellow;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Lv3{
+    width: 80%;
+    height: 20%;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: red;
     color: white;
     border: none;
     border-radius: 5px;

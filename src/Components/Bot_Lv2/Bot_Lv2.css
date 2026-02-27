@@ -1,4 +1,4 @@
-.Game{
+.Bot_Lv2{
     height: 90vh;
     width: 1000px;
     display: flex;
@@ -15,7 +15,7 @@
     left: 200px;
     bottom: 500px;
     user-select: none;
-    color: white;
+
 }
 .X:hover {
     cursor: pointer;
